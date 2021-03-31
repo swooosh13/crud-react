@@ -7,23 +7,11 @@ const instance = axios.create({
 });
 
 export const itemsAPI = {
-  getItems(id: number): IItems {
-    let items: IItems = [];
-
-    instance
-      .get(`items?id=${id}`)
-      .then((response: AxiosResponse<any>) => {
-        response.data.forEach((element: any) => {
-          items.push(element);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-      console.log(items);
-      return items;
+  getItem(id: number): any {
+    return instance.get(`items?id=${id}`);
   },
+  getItems(): any {
+    return instance.get(`items`);
+  }
 };
-
 

@@ -1,4 +1,6 @@
 import { AnyAction } from "redux";
+import { itemsAPI } from "../api/api";
+import { AppDispatch } from "./store";
 
 export type ItemType = {
   id: number;
@@ -20,7 +22,6 @@ let initialState: IItemsReducer = {
   pageSize: 10,
   isFetching: false,
 };
-
 
 export enum ItemsActionTypes {
   FETCH_ITEMS = "FETCH_ITEMS",
@@ -64,6 +65,20 @@ let itemsReducer = (state = initialState, action: AnyAction) => {
     default:
       return state;
   }
+};
+
+export const getItemById = (val: number) => async (dispatch: AppDispatch) => {
+  let response = await itemsAPI
+    .getItem(val)
+    .then((response: any) => response.data);
+  dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
+};
+
+export const getItems = () => async (dispatch: AppDispatch) => {
+  let response = await itemsAPI
+    .getItems()
+    .then((response: any) => response.data);
+  dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
 };
 
 export default itemsReducer;

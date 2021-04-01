@@ -13,14 +13,14 @@ export interface IItems extends Array<ItemType> {}
 
 export interface IItemsReducer {
   allItems: IItems;
-  pageSize: number;
   isFetching: boolean;
+  showAddModal: boolean;
 }
 
 let initialState: IItemsReducer = {
   allItems: [],
-  pageSize: 10,
   isFetching: false,
+  showAddModal: false
 };
 
 export enum ItemsActionTypes {
@@ -28,6 +28,8 @@ export enum ItemsActionTypes {
   ADD_ITEM = "ADD_ITEM",
   DELETE_ITEM = "DELETE_ITEM",
   UPDATE_UTEM = "UPDATE_UTEM",
+  CLEAR_ITEMS = "CLEAR_ITEMS",
+  TOGGLE_SHOW_MODAL = "TOGGLE_SHOW_MODAL" 
 }
 
 let itemsReducer = (state = initialState, action: AnyAction) => {
@@ -62,6 +64,13 @@ let itemsReducer = (state = initialState, action: AnyAction) => {
           return item;
         }),
       };
+    case ItemsActionTypes.TOGGLE_SHOW_MODAL:
+      return {
+        ...state,
+        showAddModal: !state.showAddModal
+      }
+    case ItemsActionTypes.CLEAR_ITEMS:
+        return [];
     default:
       return state;
   }
@@ -74,11 +83,27 @@ export const getItemById = (val: number) => async (dispatch: AppDispatch) => {
   dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
 };
 
-export const getItems = () => async (dispatch: AppDispatch) => {
+export const loadItems = () => async (dispatch: AppDispatch) => {
   let response = await itemsAPI
     .getItems()
     .then((response: any) => response.data);
   dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
+};
+
+export const clearItems = () => (dispatch: AppDispatch) => {
+  dispatch({type: ItemsActionTypes.CLEAR_ITEMS});
+}
+
+export const removeItem = (id: number) => async (dispatch: AppDispatch) => {
+  let response: any = await itemsAPI
+  .removeItem(id)
+  .then((response: any) => response.data);
+  
+  dispatch({type: ItemsActionTypes.DELETE_ITEM, id});
+}
+
+export const toggleAddModal = () => (dispatch: AppDispatch) => {
+  dispatch({type: ItemsActionTypes.TOGGLE_SHOW_MODAL});
 };
 
 export default itemsReducer;

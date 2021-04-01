@@ -3,9 +3,10 @@ import { itemsAPI } from "../src/api/api";
 import { IItems, ItemType } from "../src/redux/items-reducer";
 
 describe("itemsAPI test response", () => {
+  
   it("response array length", async () => {
     let response = await itemsAPI
-      .getItem(1)
+      .getItem(0)
       .then((response: any) => response.data);
     expect(response.length).toBe(1);
   });
@@ -30,6 +31,6 @@ describe("itemsAPI test response", () => {
       .getItems()
       .then((response: any) => response.data);
     
-    expect(response.length).toBe(2);
+    expect(response.length).toBe(5);
   });
 });

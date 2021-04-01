@@ -1,15 +1,24 @@
 .container {
-  flex: 1;
-  flex-direction: row-reverse;
   align-items: center;
   padding: 20px;
   justify-content: center;
 }
 
-.item {
+.panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   text-align: center;
+  
   border-radius: 8px;
   padding:20px;
-  background-color: blue;
 
+  color: white;
+  background-color: #1e6f5c;
+}
+
+.block {
+  padding: 10px;
+  border-radius: 5px;
 }

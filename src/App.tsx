@@ -5,7 +5,7 @@ import Main from './components/Main/Main';
 import store from './redux/store';
 import {Provider, useDispatch} from 'react-redux';
 import {loadItems} from './redux/items-reducer';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ let MainApp = () => {
   return (
     <Provider store={store}>
       <App />
-    </Provider>  
+    </Provider>
   )
 }
 

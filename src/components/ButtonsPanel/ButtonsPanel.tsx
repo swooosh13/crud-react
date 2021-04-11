@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { itemsAPI } from '../../api/api';
 import { clearItems, ItemType, loadItems, toggleAddModal } from '../../redux/items-reducer'
 import ModalAddForm from './ModalAddForm';
+import {Button} from 'antd';
 
 const ButtonsPanel = () => {
 
@@ -20,28 +21,24 @@ const ButtonsPanel = () => {
   }
 
   const handleGenerateRandomClick = async () => {
-    let item: ItemType = {
-      id: Math.floor(Math.random() * 100),
+    let item = {
       name: Math.random().toString(36).substring(7),
       description: Math.random().toString(36).substring(7),
-      position: [
-        { sector: Math.random().toString(36).substring(7), cell: Math.floor(Math.random() * 100) }
-      ]
+      sector: Math.random().toString(36).substring(7),
+      position: Math.floor(Math.random() * 100).toString()
     };
-    const response: any = await itemsAPI.postItem(item);
-    console.log(response);
+
+    await itemsAPI.postItem(item);
     dispatch(loadItems());
   }
 
   return (
     <>
       <div>
-        <div className="btn-group">
-          <button type="button" className={"btn btn-primary"} onClick={handleLoadClick}>load</button>
-          <button type="button" className={"btn btn-danger"} onClick={handleClearClick}>clear</button>
-          <button type="button" className={"btn btn-success"} onClick={handleGenerateRandomClick}>generate</button>
-          <button type="button" className={"btn btn-success"} onClick={handleOpenModal}>add</button>
-        </div>
+          <Button type={"primary"} shape={"circle"} onClick={handleOpenModal}>add</Button>
+          <Button type={"primary"} onClick={handleGenerateRandomClick}>generate</Button>
+          <Button type={"primary"} onClick={handleLoadClick}>load</Button>
+          <Button type={"primary"} danger onClick={handleClearClick}>clear</Button>
       </div>
       <ModalAddForm />
     </>)

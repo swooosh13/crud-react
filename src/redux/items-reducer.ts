@@ -1,15 +1,17 @@
-import { AnyAction } from "redux";
-import { itemsAPI } from "../api/api";
-import { AppDispatch } from "./store";
+import {AnyAction} from "redux";
+import {itemsAPI} from "../api/api";
+import {AppDispatch} from "./store";
 
 export type ItemType = {
   id: number;
   name: string;
   description: string;
-  position: [{ sector: string; cell: number }];
+  sector: string;
+  position: string;
 };
 
-export interface IItems extends Array<ItemType> {}
+export interface IItems extends Array<ItemType> {
+}
 
 export interface IItemsReducer {
   allItems: IItems;
@@ -27,9 +29,9 @@ export enum ItemsActionTypes {
   FETCH_ITEMS = "FETCH_ITEMS",
   ADD_ITEM = "ADD_ITEM",
   DELETE_ITEM = "DELETE_ITEM",
-  UPDATE_UTEM = "UPDATE_UTEM",
+  UPDATE_ITEM = "UPDATE_ITEM",
   CLEAR_ITEMS = "CLEAR_ITEMS",
-  TOGGLE_SHOW_MODAL = "TOGGLE_SHOW_MODAL" 
+  TOGGLE_SHOW_MODAL = "TOGGLE_SHOW_MODAL"
 }
 
 let itemsReducer = (state = initialState, action: AnyAction) => {
@@ -52,7 +54,7 @@ let itemsReducer = (state = initialState, action: AnyAction) => {
         allItems: [...state.allItems, action.item],
       };
 
-    case ItemsActionTypes.UPDATE_UTEM:
+    case ItemsActionTypes.UPDATE_ITEM:
       return {
         ...state,
         allItems: state.allItems.filter((item) => {
@@ -70,7 +72,7 @@ let itemsReducer = (state = initialState, action: AnyAction) => {
         showAddModal: !state.showAddModal
       }
     case ItemsActionTypes.CLEAR_ITEMS:
-        return [];
+      return [];
     default:
       return state;
   }
@@ -80,14 +82,26 @@ export const getItemById = (val: number) => async (dispatch: AppDispatch) => {
   let response = await itemsAPI
     .getItem(val)
     .then((response: any) => response.data);
-  dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
+  dispatch({type: ItemsActionTypes.FETCH_ITEMS, items: response});
 };
 
 export const loadItems = () => async (dispatch: AppDispatch) => {
-  let response = await itemsAPI
-    .getItems()
-    .then((response: any) => response.data);
-  dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
+  let response;
+
+  try {
+
+    console.log("loadItems(): byAll");
+    response = await itemsAPI
+      .getItems()
+      .then((response: any) => response.data);
+
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+
+
+  dispatch({type: ItemsActionTypes.FETCH_ITEMS, items: response});
 };
 
 export const clearItems = () => (dispatch: AppDispatch) => {
@@ -95,10 +109,10 @@ export const clearItems = () => (dispatch: AppDispatch) => {
 }
 
 export const removeItem = (id: number) => async (dispatch: AppDispatch) => {
-  let response: any = await itemsAPI
-  .removeItem(id)
-  .then((response: any) => response.data);
-  
+  await itemsAPI
+    .removeItem(id)
+    .then((response: any) => response.data);
+
   dispatch({type: ItemsActionTypes.DELETE_ITEM, id});
 }
 

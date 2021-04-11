@@ -5,6 +5,9 @@ import { AppDispatch, RootState } from '../../redux/store';
 import Items from '../Items/Items';
 import ButtonsPanel from '../ButtonsPanel/ButtonsPanel';
 import * as Icon from 'react-feather';
+import {Input} from 'antd';
+
+const {Search} = Input;
 
 const Main = () => {
   let dispatch: AppDispatch = useDispatch();
@@ -15,12 +18,7 @@ const Main = () => {
       <div className={s.block}>
         <ButtonsPanel />
       </div>
-      <form className="d-flex">
-        <input className="form-control me-4" type="search" placeholder="Search" aria-label="Search"/>
-          <button className="btn" type="submit">
-            <Icon.Search color="white" size={24}/>
-          </button>
-          </form>
+      <Search placeholder="input search text" style={{ width: 500 }} />
     </div>
     <div>
       <Items />

@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import { IItems, ItemType } from "../redux/items-reducer";
+import axios from "axios";
+import { ItemType } from "../redux/items-reducer";
 
 const instance = axios.create({
   withCredentials: true,
@@ -16,8 +16,8 @@ export const itemsAPI = {
   removeItem(id: number): any {
     return instance.delete(`items/${id}`);
   },
-  postItem(item: ItemType): any {
-    return instance.post('items/', {...item})
+  postItem(item: any): any {
+    return instance.post('items/', item)
   },
   updateItems(id: number, item: ItemType): any {},
 };

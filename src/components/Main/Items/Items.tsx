@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { IItems, IItemsReducer } from '../../redux/items-reducer'
+import { RootState } from '../../../redux/reducers/store';
+import { IItems, IItemsReducer } from '../../../redux/reducers/items/items-reducer'
 import Item from './Item/Item';
 import s from './Items.module.css'
 

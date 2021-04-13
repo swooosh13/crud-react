@@ -1,7 +1,9 @@
 .container {
   align-items: center;
-  padding: 20px;
+
   justify-content: center;
+  background-color: #f6fafb;
+  padding: 20px;
 }
 
 .panel {
@@ -10,12 +12,10 @@
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  
-  border-radius: 8px;
-  padding:20px;
 
-  color: white;
-  background-color: #1e6f5c;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #cfdbdf;;
 }
 
 .block {

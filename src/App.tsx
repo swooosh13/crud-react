@@ -1,30 +1,39 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import './App.css';
-import Main from './components/Main/Main';
-import store from './redux/store';
-import {Provider, useDispatch} from 'react-redux';
-import {loadItems} from './redux/items-reducer';
+import Main from './components/Main/Home';
+import store from './redux/reducers/store';
+import { Provider } from 'react-redux';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './components/auth/Login';
 import 'antd/dist/antd.css';
+import Registration from './components/auth/Registration';
 
-function App() {
-  const dispatch = useDispatch();
+let routes = (
+  <div>
+    <Switch>
+      <Route exact path="/">
+        <Main />
+      </Route>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/registration">
+        <Registration />
+      </Route>
+    </Switch>
+  </div>
+)
 
-  useEffect(() => {
-    dispatch(loadItems());
-  }, [dispatch])
-
-  return (
-      <Main />
-  );
-}
-
-let MainApp = () => {
+let AppContainer = () => {
   return (
     <Provider store={store}>
-      <App />
+      <Router>
+        {routes}
+      </Router>
     </Provider>
   )
 }
 
-export default MainApp;
+export default AppContainer;

@@ -2,7 +2,7 @@
   flex: 1;
   display: flex;
 
-  background-color: #31b68e;
+  background-color: #252b31;
 
   text-align: center;
   align-items: center;
@@ -32,7 +32,7 @@
 
   align-items: center;
   justify-content: space-around;
-  background-color: #101a3b;
+  background-color: #5e6668;
   border-radius: 0px 10px 10px 0px;
   color: white;
 

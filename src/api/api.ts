@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ItemType } from "../redux/items-reducer";
+import { ItemType } from "../redux/reducers/type";
 
 const instance = axios.create({
   withCredentials: true,

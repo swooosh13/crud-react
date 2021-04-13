@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import s from './index.module.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './index.scss';
+
 
 ReactDOM.render(
-    <div className={s.app}>
+    <div className="main">
       <App />
     </div>,
   document.getElementById('root')

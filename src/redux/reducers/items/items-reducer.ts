@@ -1,14 +1,7 @@
 import {AnyAction} from "redux";
-import {itemsAPI} from "../api/api";
-import {AppDispatch} from "./store";
-
-export type ItemType = {
-  id: number;
-  name: string;
-  description: string;
-  sector: string;
-  position: string;
-};
+import {itemsAPI} from "../../../api/api";
+import {AppDispatch} from "../store";
+import { ItemsActionTypes, ItemType } from "../type";
 
 export interface IItems extends Array<ItemType> {
 }
@@ -24,15 +17,6 @@ let initialState: IItemsReducer = {
   isFetching: false,
   showAddModal: false
 };
-
-export enum ItemsActionTypes {
-  FETCH_ITEMS = "FETCH_ITEMS",
-  ADD_ITEM = "ADD_ITEM",
-  DELETE_ITEM = "DELETE_ITEM",
-  UPDATE_ITEM = "UPDATE_ITEM",
-  CLEAR_ITEMS = "CLEAR_ITEMS",
-  TOGGLE_SHOW_MODAL = "TOGGLE_SHOW_MODAL"
-}
 
 let itemsReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {

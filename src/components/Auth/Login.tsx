@@ -1,18 +1,26 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/reducers/auth/actions';
 import { Button, Input } from 'antd';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, Redirect } from 'react-router-dom';
 import { Checkbox } from 'antd';
 
 import '../../index';
+import { RootState } from '../../redux/reducers/store';
+import { stat } from 'node:fs';
 
 let Login = () => {
   const dispatch = useDispatch();
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
-  useEffect(() => {
+  useEffect((): any => {
     console.log("/login page");
-  }, [])
+  }, [isAuth]);
+
+  if (isAuth) {
+    return <Redirect to="/home" />
+  }
+
   const loginHandle = () => {
     let payload = {
       email: "ema@ma.rt",
@@ -37,11 +45,10 @@ let Login = () => {
             <Link to="/registration">
               <Button type="ghost">sign up</Button>
             </Link>
-            <Link to="/">
+            <Link to="/home">
               <Button onClick={loginHandle} type="primary">login</Button>
             </Link>
           </div>
-
         </div>
       </div>
     </div>)

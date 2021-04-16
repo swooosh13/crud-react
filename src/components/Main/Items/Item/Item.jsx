@@ -3,7 +3,7 @@ import s from "./Item.module.css";
 import * as Icon from "react-feather";
 import { Modal } from "antd";
 import { useDispatch } from "react-redux";
-import { removeItem } from "../../../../redux/reducers/items/items-reducer";
+import { removeItem } from "../../../../redux/reducers/items/actions";
 import { Button } from "antd";
 
 const Item = (props) => {

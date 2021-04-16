@@ -4,7 +4,7 @@ import { RootState } from '../../../redux/reducers/store';
 import { useDispatch, useSelector } from 'react-redux';
 import {Modal} from 'antd';
 
-import { loadItems, toggleAddModal } from '../../../redux/reducers/items/items-reducer';
+import { loadItems, toggleAddModal } from '../../../redux/reducers/items/actions';
 
 const ModalForm = () => {
 

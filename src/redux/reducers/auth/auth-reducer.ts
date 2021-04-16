@@ -5,12 +5,14 @@ export type authState = {
   isAuth: boolean;
   email: string;
   userToken: string | undefined;
+  username: string;
 }
 
 export const initialState: authState = {
   isAuth: isSignIn(),
   email: getUser(),
-  userToken: getToken()
+  userToken: getToken(),
+  username: ''
 }
 
 export const authReducer = (state: authState = initialState, action: AnyAction) => {

@@ -13,6 +13,7 @@ let Registration = () => {
   useEffect(() => {
     console.log("/registration page");
   }, [])
+
   const onRegister = () => {
     let payload = {
       email: "ema@ma.rt",
@@ -38,7 +39,7 @@ let Registration = () => {
             <Link to="/login">
               <Button type="ghost">back</Button>
             </Link>
-            <Link to="/">
+            <Link to="/home">
               <Button onClick={onRegister} type="primary">sign up</Button>
             </Link>
           </div>

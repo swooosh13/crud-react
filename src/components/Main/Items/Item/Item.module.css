@@ -19,7 +19,7 @@
   flex-direction: row;
   justify-content: space-between;
 
-  min-width: 340px;
+  min-width: 20vh;
   max-width: 220px;
   margin-top: 20px;
 }

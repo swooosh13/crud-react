@@ -10,11 +10,11 @@ const Items = () => {
   let items: IItemsReducer = useSelector((state: RootState) => state.items);
   let allItems: IItems = items.allItems;
   let itemsElements: any;
-  
+
   if (allItems) {
-    itemsElements = allItems.map(item => 
-      (<Item key={item.id} 
-        name={item.name} description={item.description} id={item.id} position={item.position}/>))
+    itemsElements = allItems.map(item =>
+    (<Item key={item.id}
+      name={item.name} description={item.description} id={item.id} position={item.position} />))
   }
 
   return (<div className={s.container}>

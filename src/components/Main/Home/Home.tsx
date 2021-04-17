@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadItems, loadItemsByName, loadItemsByNameAndDescription } from '../../../redux/reducers/items/actions';
+import { loadItems, loadItemsByName, loadItemsByNameAndDescription, setCurrentPage, setPerPage } from '../../../redux/reducers/items/actions';
 
 import Items from '../Items/Items';
 import s from './Home.module.css'
 
-import { Layout, Avatar, Button, Input, Select } from 'antd';
+import { Layout, Avatar, Button, Input, Select, Spin, Space, Pagination, Divider } from 'antd';
 
 import { Redirect } from 'react-router-dom';
 import { RootState } from '../../../redux/reducers/store';
+import { stat } from 'node:fs';
+import { IItems, IItemsReducer } from '../../../redux/reducers/items/items-reducer';
 
 const { Option } = Select;
 
@@ -18,8 +20,14 @@ const { Header, Content, Footer } = Layout;
 const Home = () => {
   const dispatch = useDispatch();
   const { isAuth, username, email } = useSelector((state: RootState) => state.auth);
-
+  const { currentPage, perPage, totalCount } = useSelector((state: RootState) => state.items);
+  let items: IItemsReducer = useSelector((state: RootState) => state.items);
   let [filter, setFilter] = useState<string>('Any');
+
+  let allItems: IItems = items.allItems;
+  let indexOfLastItem = currentPage * perPage;
+  let indexOfFirstItem = indexOfLastItem - perPage;
+  let currentItems = allItems.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
     dispatch(loadItems());
@@ -28,6 +36,7 @@ const Home = () => {
   if (!isAuth) {
     return <Redirect to="/login" />
   }
+
 
   const onHandleSearch = (v: string) => {
     let req = v.split(' ');
@@ -46,6 +55,7 @@ const Home = () => {
     if (req.length === 0) {
 
     }
+    dispatch(setCurrentPage(1));
     console.log(v);
   }
 
@@ -89,15 +99,23 @@ const Home = () => {
         </div>
 
       </Header>
-      <Content style={{ margin: '-20px 0 0 0', overflow: 'initial' }}>
+      <Content style={{ margin: '0px 0 0 0', overflow: 'initial' }}>
         <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
 
           <div>
-            <Items />
+
+            <Divider orientation="left">{totalCount}</Divider>
+            <Items items={currentItems} />
           </div>
+
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}></Footer>
+      <Footer style={{ textAlign: 'center' }}>
+        <Pagination size="small" total={totalCount}
+          defaultCurrent={1}
+          onChange={page => dispatch(setCurrentPage(page))}
+          onShowSizeChange={(e, v) => dispatch(setPerPage(v))} />
+      </Footer>
     </Layout>
   )
 }

@@ -9,7 +9,9 @@ export const getItemById = (val: number) => async (dispatch: AppDispatch) => {
   dispatch({ type: ItemsActionTypes.FETCH_ITEMS, items: response });
 };
 
-export const loadItems = () => async (dispatch: AppDispatch) => {
+export const loadItems = ( ) => async (
+  dispatch: AppDispatch
+) => {
   let response;
   try {
     console.log("loadItems(): AC");
@@ -68,3 +70,13 @@ export const removeItem = (id: number) => async (dispatch: AppDispatch) => {
 export const toggleAddModal = () => (dispatch: AppDispatch) => {
   dispatch({ type: ItemsActionTypes.TOGGLE_SHOW_MODAL });
 };
+
+export const setCurrentPage = (page: number) => ({
+  type: ItemsActionTypes.SET_CURRENT_PAGE,
+  payload: page,
+});
+
+export const setPerPage = (count: number) => ({
+  type: ItemsActionTypes.SET_PER_PAGE,
+  payload: count
+});

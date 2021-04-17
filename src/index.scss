@@ -58,3 +58,22 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.item-subblock {
+  padding: "1vh 0px";background: "red";
+  .checkbox {
+    padding-right: 10px;
+  }
+}
+
+.sub-element {
+  padding: 20px;
+  background: "red";
+}
+
+.spin-loader {
+  display: flex;
+  
+  text-align: center;
+  justify-content: center;
+}

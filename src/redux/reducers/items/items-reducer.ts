@@ -1,20 +1,26 @@
-import {AnyAction} from "redux";
-import {itemsAPI} from "../../../api/api";
-import {AppDispatch} from "../store";
+import { AnyAction } from "redux";
+import { itemsAPI } from "../../../api/api";
+import Item from "../../../components/Main/Items/Item/Item";
+import { AppDispatch } from "../store";
 import { ItemsActionTypes, ItemType } from "../type";
 
-export interface IItems extends Array<ItemType> {
-}
+export interface IItems extends Array<ItemType> {}
 export interface IItemsReducer {
   allItems: IItems;
   isFetching: boolean;
   showAddModal: boolean;
+  currentPage: number;
+  perPage: number;
+  totalCount: number;
 }
 
 let initialState: IItemsReducer = {
   allItems: [],
   isFetching: false,
-  showAddModal: false
+  showAddModal: false,
+  currentPage: 1,
+  perPage: 10,
+  totalCount: 0,
 };
 
 let itemsReducer = (state = initialState, action: AnyAction) => {
@@ -23,6 +29,7 @@ let itemsReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         allItems: action.items,
+        totalCount: action.items.length,
       };
 
     case ItemsActionTypes.DELETE_ITEM:
@@ -52,8 +59,18 @@ let itemsReducer = (state = initialState, action: AnyAction) => {
     case ItemsActionTypes.TOGGLE_SHOW_MODAL:
       return {
         ...state,
-        showAddModal: !state.showAddModal
-      }
+        showAddModal: !state.showAddModal,
+      };
+    case ItemsActionTypes.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+    case ItemsActionTypes.SET_PER_PAGE:
+      return {
+        ...state,
+        perPage: action.payload,
+      };
     case ItemsActionTypes.CLEAR_ITEMS:
       return [];
     default:

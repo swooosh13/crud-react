@@ -4,7 +4,19 @@ import * as Icon from "react-feather";
 import { Modal } from "antd";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../../../../redux/reducers/items/actions";
-import { Button } from "antd";
+import { Button, Space, Row, Col, Checkbox } from "antd";
+import { StarOutlined } from "@ant-design/icons";
+
+import "../../../../index";
+
+const style = {
+  padding: "1px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "#fff",
+  minHeight: "40px",
+};
 
 const Item = (props) => {
   const dispatch = useDispatch();
@@ -25,35 +37,53 @@ const Item = (props) => {
     setShow(false);
   };
 
+  const onSelect = () => {
+    props.onSelect(id)
+  }
+
   return (
     <>
-      <div className={s.block}>
-        <div className={s.item_name}>
-          <span>{name}</span>
-        </div>
-
-        <div className={s.info}>
-          <div className={s.maininfo}>
+      <Col className="gutter-row" span={3}>
+        <div className="item-subblock">
+          <div style={style}>
+            <div className="checkbox">
+            <Checkbox onChange={onSelect}/>
+            </div>
             <div>
-              <p>{description}</p>
-              <p>id : {id}</p>
-              <p>sector: {position}</p>
+            <StarOutlined />
             </div>
           </div>
-          <div className={s.buttons}>
-            <Button type="text" onClick={handleModal}>
-              <Icon.X color="white" size={12} />
-            </Button>
-            <Button type="text">
-              <Icon.RefreshCcw color="white" size={12} />
-            </Button>
-            <Button type="text">
-              <Icon.Plus color="white" size={12} />
-            </Button>
-          </div>
         </div>
-      </div>
+      </Col>
+      <Col className="gutter-row" span={4}>
+        <div style={style}>{props.name}</div>
+      </Col>
+      <Col className="gutter-row" span={5}>
+        <div style={style}>{props.description}</div>
+      </Col>
+      <Col className="gutter-row" span={2}>
+        <div style={style}>{props.sector}</div>
+      </Col>
+      <Col className="gutter-row" span={2}>
+        <div style={style}>{props.position}</div>
+      </Col>
+      <Col className="gutter-row" span={2}>
+        <div style={style}>{props.id}</div>
+      </Col>
 
+      <Col className="gutter-row" span={5}>
+        <div style={style}>
+          <Button type="text" onClick={handleModal}>
+            <Icon.X color="black" size={12} />
+          </Button>
+          <Button type="text">
+            <Icon.RefreshCcw color="black" size={12} />
+          </Button>
+          <Button type="text">
+            <Icon.Plus color="black" size={12} />
+          </Button>
+        </div>
+      </Col>
       <Modal
         title="Basic Modal"
         visible={show}
